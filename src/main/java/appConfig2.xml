@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+ 	<bean id="conn" class="test2.DBConn">
+ 		<constructor-arg> <!-- 생성자로 의존성 부여 -->
+ 			<value>oracle</value>
+ 		</constructor-arg>
+ 	</bean>
+ 	
+ 	<bean id="dao" class="test2.DaoImplOracle">
+ 		<property name="conn"> <!-- setter로 의존성 부여 -->
+ 			<ref bean="conn"/> <!-- id가 conn인 객체르 메버변수 conn에 넣어줌 -->
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean id="service" class="test2.ServiceImplSchoolB">
+ 		<property name="dao">
+ 			<ref bean="dao"/>
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean id="menu" class="test2.Menu">
+ 		<property name="service">
+ 			<ref bean="service"/>
+ 		</property>
+ 	</bean>
+</beans>
